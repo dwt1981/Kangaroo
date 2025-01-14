@@ -11,7 +11,7 @@ train_data = raw[raw['contract'] == 'TL2403']
 train_data = train_data.set_index('datetime')
 train_data.drop(columns=['contract'], inplace=True)
 
-train_data = train_data.resample('15min').agg({
+train_data = train_data.resample('D').agg({
     'open': 'first',
     'high': 'max',
     'low': 'min',
@@ -22,7 +22,7 @@ train_data['returns'] = train_data['close'].pct_change(fill_method=None)
 train_data.dropna(inplace=True)
 
 # Filter data between September 2023 and February 2024
-start_date = pd.Timestamp('2023-09-01')
+start_date = pd.Timestamp('2023-08-01')
 end_date = pd.Timestamp('2024-02-29')
 train_data = train_data[(train_data.index >= start_date) 
                         & (train_data.index <= end_date)]
